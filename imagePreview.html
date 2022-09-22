@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img id="imagePreview">
+    <input type="file" id="uploadControll">
+    <input type="button" value="Preview">
+
+
+
+        <!--For aspx <asp:FileUpload ID="FileUpload1" runat="server" Width="211px"  />         
+        <asp:Image ID="ImageLogo" runat="server" Width="200px" Height="70px" ImageUrl="~/images/blank id card.jpg" />  -->
+
+
+
+    <script type="text/javascript">
+        window.onload = function () {
+           // var fileBrowser = document.getElementById('<%= FileUpload1.ClientID  %>'); // for aspx
+            var fileBrowser = document.getElementById('uploadControll');  //image upload controll in html
+           fileBrowser.onchange = function () {
+               LoadImage(fileBrowser);
+           }            
+       };
+
+
+
+       function LoadImage(fileBrowser) {
+           if (typeof (FileReader) != "undefined") {
+               //var dvPreview = document.getElementById('<%= ImageLogo.ClientID %>'); // for aspx
+               var dvPreview = document.getElementById('imagePreview');  //image preview controll in html
+               dvPreview.innerHTML = "";
+               var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+               for (var i = 0; i < fileBrowser.files.length; i++) {
+                   var file = fileBrowser.files[i];
+                   if (regex.test(file.name.toLowerCase())) {
+                       var reader = new FileReader();
+                       reader.onload = function (e) {
+
+                           //var img = document.createElement("IMG");
+                            //    img.height = "100";
+                            //    img.width = "100";
+                           //img.src = e.target.result;
+                           //dvPreview.appendChild(img);
+
+                           var image = new Image();
+                           image.src = e.target.result;
+                           image.onload = function () {
+                                //  if (image.width != 680 || image.height != 850) {
+                                //      alert('Image size not valid');
+                                //      fileBrowser.value = "";
+                                //   } else {
+                                //       image.height = "250";
+                                //       image.width = "150";
+                               dvPreview.src = e.target.result;
+                            //    dvPreview.appendChild(image);
+                            //    }
+                           };
+
+                       }
+                       reader.readAsDataURL(file);
+                   } else {
+                       alert(file.name + " is not a valid image file.");
+                       dvPreview.innerHTML = "";
+                       return false;
+                   }
+               }
+           } else {
+               alert("This browser does not support HTML10 FileReader.");
+           }
+       }
+
+
+
+       $(document).ready(function () {
+           var prm = Sys.WebForms.PageRequestManager.getInstance();
+           prm.add_initializeRequest(InitializeRequest);
+           prm.add_endRequest(EndRequest);
+       });
+
+       function InitializeRequest(sender, args) {
+       }
+
+
+       function EndRequest(sender, args) {
+           // after update occur on UpdatePanel re-init the Autocomplete
+           //var fileBrowser = document.getElementById('<%= FileUpload1.ClientID  %>'); // for aspx
+           var fileBrowser = document.getElementById('uploadControll'); //image upload controll in html
+           fileBrowser.onchange = function () {
+               LoadImage(fileBrowser);
+           }           
+       }
+
+   </script>
+
+
+</body>
+</html>
