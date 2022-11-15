@@ -1,3 +1,18 @@
+### Html Table to Excel Generate 
+```js
+	<script src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+	
+	function ExportToExcel(type, fn, dl) {
+	    var elt = document.getElementById('tbl_exporttable_to_xls');
+	    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+	    return dl ?
+	      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+	      XLSX.writeFile(wb, fn || ('collection_due_data.' + (type || 'xlsx')));
+	 }
+	 
+```
+
+
 ## Validations In JavaScript
 
 Validations are required in Web Programming to insure that contradictionary & unauthorized data is not get stored in the Database.
