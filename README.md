@@ -1,6 +1,31 @@
 ### Html Table to Excel Generate 
+```html
+	<div class="table-responsive">
+	<table class="table table-bordered table-striped" id="tbl_exporttable_to_xls">
+	    <thead>
+		<tr>
+		    <th style="text-align: center">SL</th>
+		    <th style="text-align: left">Artical Name</th>
+		    <th style="text-align: right">Image</th>
+		    <th style="text-align: right" ng-repeat="x in sizeList">{{x.Size}}</th>
+		    <th style="text-align: right">Total Value</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		<tr ng-repeat="x in stockList">
+		    <td style="text-align: center">{{$index +1}}</td>
+		    <td style="text-align: left">{{x.NAME}}</td>                                        
+		    <td style="text-align: right"> <img src="data:image/jpg;base64,{{x.Image}}" alt="not support" height="100" width="100"/></td>
+		    <td style="text-align: right" ng-repeat="y in sizeList">{{x[y.SizeAmt] | number }}</td>
+		    <td style="text-align: right">{{x.TotalValue}}</td>
+		</tr>
+	    </tbody>
+	</table>
+	<input type="button" value="Export to Excel" data-ng-click="ExportToExcel()" class="btn btn-primary" />
+    </div>
+
+```
 ```js
-	<script src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 	
 	function ExportToExcel(type, fn, dl) {
 	    var elt = document.getElementById('tbl_exporttable_to_xls');
@@ -9,6 +34,9 @@
 	      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
 	      XLSX.writeFile(wb, fn || ('collection_due_data.' + (type || 'xlsx')));
 	 }
+	 
+	 <script src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+	
 	 
 ```
 
