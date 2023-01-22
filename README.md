@@ -108,3 +108,12 @@ Javascript enables the UI to Validate the fields on Client Machine which reduces
 		</tr>
 	</thead>
 </table>
+
+
+
+ ## time in js
+ ```js 
+ 	function getTimeString(time) {
+            return time.getHours().padStart(2, '0') + "" + time.getMinutes().padStart(2, '0') + "" + time.getSeconds().padStart(2, '0');
+        }
+ ```
